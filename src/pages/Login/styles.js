@@ -1,5 +1,5 @@
-import styled, {keyframes} from "styled-components";
-import SignupImage from "../../assets/signup.svg"
+import styled, { keyframes } from "styled-components";
+import LoginImage from "../../assets/login.svg"
 
 export const Container = styled.div`
     height: 100vh;
@@ -10,7 +10,7 @@ export const Container = styled.div`
 export const Background = styled.div`
     @media(min-width: 1100px){
         flex: 1;
-        background: url(${SignupImage}) no-repeat center, var(--black);
+        background: url(${LoginImage}) no-repeat center, var(--black);
         background-size: contain;
     }
 `
@@ -27,12 +27,12 @@ export const Content = styled.div`
 const animation = keyframes`
     from{
         opacity: 0;
-        transform: translateX(50px);
+        transform: translateX(-50px);
     }
 
     to{
         opacity: 1;
-        transform: translateX(0px);
+        transform: translateX(-0px);
     }
 `
 

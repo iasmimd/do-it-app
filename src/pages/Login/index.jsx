@@ -8,17 +8,12 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import api from "../../services/api";
 
-const Signup = ({ autentication }) => {
+const Login = ({ autentication, setAutentication }) => {
   const schema = yup.object().shape({
-    name: yup.string().required("Campo obrigatório"),
     email: yup.string().required("Campo obrigatório"),
     password: yup
       .string()
       .min(8, "Mínimo 8 dígitos")
-      .required("Campo obrigatório"),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref("password")], "Senhas diferentes")
       .required("Campo obrigatório"),
   });
 
@@ -30,15 +25,19 @@ const Signup = ({ autentication }) => {
 
   const history = useHistory();
 
-  const onSubmit = ({ name, email, password }) => {
-    const user = { name, email, password };
+  const onSubmit = (data) => {
     api
-      .post("user/register", user)
+      .post("/user/login", data)
       .then((res) => {
-        console.log(res.data);
-        return history.push("/login");
+        const { token, user } = res.data;
+        localStorage.setItem("@Doit:token", JSON.stringify(token));
+        localStorage.setItem("@Doit:user", JSON.stringify(user));
+        setAutentication(true);
+        return history.push("/dashboard");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   if (autentication) {
@@ -47,19 +46,10 @@ const Signup = ({ autentication }) => {
 
   return (
     <Container>
-      <Background />
       <Content>
         <AnimationContainer>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <h1>Cadastro</h1>
-            <Input
-              register={register}
-              name="name"
-              icon={FiUser}
-              label="Nome"
-              placeholder="Seu nome"
-              error={errors.name?.message}
-            />
+            <h1>Login</h1>
             <Input
               register={register}
               name="email"
@@ -77,24 +67,16 @@ const Signup = ({ autentication }) => {
               type="password"
               error={errors.password?.message}
             />
-            <Input
-              register={register}
-              name="confirmPassword"
-              icon={FiLock}
-              label="Confirmar senha"
-              placeholder="Confirmar senha"
-              type="password"
-              error={errors.confirmPassword?.message}
-            />
             <Button type="submit">Enviar</Button>
             <p>
-              Já possui uma conta? Faça <Link to="/login">login</Link>
+              Não possui uma conta?<Link to="/signup"> Cadastre-se</Link>
             </p>
           </form>
         </AnimationContainer>
       </Content>
+      <Background />
     </Container>
   );
 };
 
-export default Signup;
+export default Login;

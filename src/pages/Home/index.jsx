@@ -1,13 +1,18 @@
 import { useHistory } from "react-router";
+import { Redirect } from "react-router-dom";
 import Button from "../../components/Button";
 import { Container, Content } from "./styles";
 
-const Home = () => {
+const Home = ({autentication}) => {
   const history = useHistory();
 
   const handlePage = (path) => {
     return history.push(path);
   };
+
+  if(autentication){
+    return <Redirect to="/dashboard"/>
+}
 
   return (
     <Container>
@@ -20,7 +25,7 @@ const Home = () => {
           <Button onClick={() => handlePage("/signup")} whiteSchema>
             Cadastre-se
           </Button>
-          <Button onClick={() => handlePage("/a")}>Login</Button>
+          <Button onClick={() => handlePage("/login")}>Login</Button>
         </div>
       </Content>
     </Container>
