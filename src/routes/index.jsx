@@ -27,7 +27,7 @@ const Routes = () => {
       <Route path="/login">
         <Login autentication={autentication} setAutentication={setAutentication}/>
       </Route>
-      <Route>
+      <Route path="/dashboard">
         <Darshboard autentication={autentication} />
       </Route>
     </Switch>

@@ -1,12 +1,13 @@
 import { Container, Content, Background, AnimationContainer } from "./styles";
 import { Link, Redirect, useHistory } from "react-router-dom";
-import { FiUser, FiMail, FiLock } from "react-icons/fi";
+import { FiMail, FiLock } from "react-icons/fi";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import api from "../../services/api";
+import toast from "react-hot-toast";
 
 const Login = ({ autentication, setAutentication }) => {
   const schema = yup.object().shape({
@@ -33,10 +34,11 @@ const Login = ({ autentication, setAutentication }) => {
         localStorage.setItem("@Doit:token", JSON.stringify(token));
         localStorage.setItem("@Doit:user", JSON.stringify(user));
         setAutentication(true);
+        toast.success("Bem-vindo")
         return history.push("/dashboard");
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        toast.error("Usuário não encontrado")
       });
   };
 

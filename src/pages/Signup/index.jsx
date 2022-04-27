@@ -7,6 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import api from "../../services/api";
+import toast from "react-hot-toast";
 
 const Signup = ({ autentication }) => {
   const schema = yup.object().shape({
@@ -34,11 +35,11 @@ const Signup = ({ autentication }) => {
     const user = { name, email, password };
     api
       .post("user/register", user)
-      .then((res) => {
-        console.log(res.data);
+      .then(() => {
+        toast.success("Cadastrado com sucesso");
         return history.push("/login");
       })
-      .catch((err) => console.log(err));
+      .catch(() => toast.error("Algo deu errado ):"));
   };
 
   if (autentication) {

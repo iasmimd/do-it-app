@@ -7,7 +7,7 @@ import { FiEdit2 } from "react-icons/fi";
 import { Container, InputContainer, TasksContainer } from "./styles";
 import { useState, useEffect } from "react";
 import api from "../../services/api";
-
+import toast from "react-hot-toast";
 
 const Darshboard = ({ autentication }) => {
   const [tasks, setTasks] = useState([]);
@@ -65,7 +65,11 @@ const Darshboard = ({ autentication }) => {
           },
         }
       )
-      .then((res) => loadTasks());
+      .then(() => {
+        loadTasks();
+        toast.success("Task adicionada");
+      })
+      .catch(() => toast.error("Algo deu errado ):"));
   };
 
   const handleCompleted = (id) => {
@@ -81,7 +85,7 @@ const Darshboard = ({ autentication }) => {
           },
         }
       )
-      .then((res) => setTasks(newTasks));
+      .then(() => setTasks(newTasks));
   };
 
   if (!autentication) {
