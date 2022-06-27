@@ -1,1 +1,1 @@
-Doit is an application made to facilitate your routine, and organize your tasks!
+app link: https://do-it-gules-kappa.vercel.app/
